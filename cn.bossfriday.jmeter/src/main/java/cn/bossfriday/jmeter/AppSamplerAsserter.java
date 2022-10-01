@@ -1,7 +1,7 @@
 package cn.bossfriday.jmeter;
 
+import cn.bossfriday.jmeter.asserter.CodeMsgAsserter;
 import cn.bossfriday.jmeter.asserter.ISamplerAsserter;
-import cn.bossfriday.jmeter.asserter.impl.CodeMsgAsserter;
 import cn.bossfriday.jmeter.common.PocException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

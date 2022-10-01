@@ -18,16 +18,11 @@ public class Const {
     public static final String CONST_LF = "\n";
     public static final String CONST_DOT = ".";
     public static final String CONST_SEMICOLON = ";";
-    public static final String CONST_VERIFY_CODE_URL = "verifyCodeUrl";
-    public static final String CONST_LOGIN_URL = "loginUrl";
-    public static final String CONST_MOBILE = "mobile";
-    public static final String CONST_REGION = "region";
-    public static final String CONST_V_CODE = "vCode";
 
     /**
      * GUI
      */
-    public static final String GUI_SAMPLER_NAME = "Beem Server Sampler";
+    public static final String GUI_SAMPLER_NAME = "BossFriday CommonHttp Sampler";
     public static final String GUI_SAMPLER_TYPE = "samplerType";
     public static final String GUI_SAMPLE_LABEL = "sampleLabel";
     public static final String GUI_ASSERT_TYPE = "assertType";
@@ -79,6 +74,11 @@ public class Const {
     public static final String FUNCTION_GET_GROUP_NAME = "getGroupName";
     public static final String FUNCTION_GET_DEPT_NAME = "getDeptName";
     public static final String FUNCTION_RANDOM_CHINESE_NAME = "randomChineseName";
+    public static final String FUNCTION_GET_TIMESTAMP = "getTs";
+    public static final String FUNCTION_MATH_ADD = "mathAdd";
+    public static final String FUNCTION_MATH_SUBTRACT = "mathSubtract";
+    public static final String FUNCTION_MATH_MULTIPLY = "mathMultiply";
+    public static final String FUNCTION_MATH_DIVIDE = "mathDivide";
 
     /**
      * ArgName
@@ -91,6 +91,8 @@ public class Const {
     public static final String ARG_NAME_VAR_NAME = "varName";
     public static final String ARG_NAME_MOD_NAME = "mod";
     public static final String ARG_NAME_FIRST_NAME_LENGTH = "firstNameLength";
+    public static final String ARG_NAME_X = "x";
+    public static final String ARG_NAME_Y = "y";
 
     /**
      * Others

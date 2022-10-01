@@ -1,7 +1,6 @@
-package cn.bossfriday.jmeter.asserter.impl;
+package cn.bossfriday.jmeter.asserter;
 
 import cn.bossfriday.jmeter.AppSamplerAsserter;
-import cn.bossfriday.jmeter.asserter.ISamplerAsserter;
 import cn.bossfriday.jmeter.common.Combo3;
 import cn.bossfriday.jmeter.common.Const;
 import cn.bossfriday.jmeter.entities.ApiResponse;

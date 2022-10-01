@@ -1,10 +1,9 @@
-package cn.bossfriday.jmeter.sampler.impl;
+package cn.bossfriday.jmeter.sampler;
 
 import cn.bossfriday.jmeter.AppSamplerBuilder;
 import cn.bossfriday.jmeter.common.Combo3;
 import cn.bossfriday.jmeter.common.PocException;
 import cn.bossfriday.jmeter.entities.SamplerSetting;
-import cn.bossfriday.jmeter.sampler.BaseSampler;
 import cn.bossfriday.jmeter.utils.HttpUtils;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpRequestBase;

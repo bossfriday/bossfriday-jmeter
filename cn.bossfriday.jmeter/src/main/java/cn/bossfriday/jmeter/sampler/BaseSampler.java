@@ -188,7 +188,8 @@ public abstract class BaseSampler extends BaseSamplerComponent {
             }
         }
 
-        if ((this.setting.isLogResponse() || !result.isSuccessful()) && !StringUtils.isEmpty(response)) {
+        boolean isLogResponse = (this.setting.isLogResponse() || !result.isSuccessful()) && !StringUtils.isEmpty(response);
+        if (isLogResponse) {
             sb.append(", response=" + response.replace('\n', ' '));
         }
 
