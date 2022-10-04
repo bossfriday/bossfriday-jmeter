@@ -89,7 +89,7 @@ public class Const {
     public static final String ARG_NAME_END = "end";
     public static final String ARG_NAME_CSV_FILE_NAME = "csvFileName";
     public static final String ARG_NAME_VAR_NAME = "varName";
-    public static final String ARG_NAME_MOD_NAME = "mod";
+    public static final String ARG_NAME_MOD = "mod";
     public static final String ARG_NAME_FIRST_NAME_LENGTH = "firstNameLength";
     public static final String ARG_NAME_X = "x";
     public static final String ARG_NAME_Y = "y";

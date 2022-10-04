@@ -29,7 +29,7 @@ public class ModCsvData extends BaseFunction {
         String csvFileName = this.getArgValue(ARG_NAME_CSV_FILE_NAME, args);
         String varName = this.getArgValue(ARG_NAME_VAR_NAME, args);
         Integer sampleIndex = this.getArgValue(ARG_NAME_SAMPLE_INDEX, args);
-        Integer mod = Integer.parseInt(this.getArgValue(ARG_NAME_MOD_NAME, args).toString());
+        Integer mod = Integer.parseInt(this.getArgValue(ARG_NAME_MOD, args).toString());
         List<CSVRecord> csvRecords = CsvDataReader.getInstance().getCsvData(csvFileName);
 
         return csvRecords.get(sampleIndex % mod).get(varName);
@@ -41,7 +41,7 @@ public class ModCsvData extends BaseFunction {
         argMap.put(ARG_NAME_CSV_FILE_NAME, 0);
         argMap.put(ARG_NAME_VAR_NAME, 1);
         argMap.put(ARG_NAME_SAMPLE_INDEX, 2);
-        argMap.put(ARG_NAME_MOD_NAME, 3);
+        argMap.put(ARG_NAME_MOD, 3);
 
         return argMap;
     }

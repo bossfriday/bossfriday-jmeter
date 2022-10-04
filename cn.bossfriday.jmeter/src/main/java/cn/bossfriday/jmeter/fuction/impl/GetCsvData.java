@@ -32,7 +32,7 @@ public class GetCsvData extends BaseFunction {
         Integer sampleIndex = this.getArgValue(ARG_NAME_SAMPLE_INDEX, args);
         List<CSVRecord> csvRecords = CsvDataReader.getInstance().getCsvData(csvFileName);
         if (sampleIndex >= csvRecords.size()) {
-            return new PocException(String.format("not enough data in (%s)!", csvFileName));
+            throw new PocException(String.format("not enough data in (%s)!", csvFileName));
         }
 
         return csvRecords.get(sampleIndex).get(varName);
