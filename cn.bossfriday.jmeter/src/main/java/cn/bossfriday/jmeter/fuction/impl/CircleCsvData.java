@@ -28,7 +28,7 @@ public class CircleCsvData extends BaseFunction {
     @Override
     public Object apply(Object... args) throws PocException {
         String csvFileName = this.getArgValue(ARG_NAME_CSV_FILE_NAME, args);
-        String varName = this.getArgValue(ARG_NAME_VAR_NAME, args).toString();
+        String varName = this.getArgValue(ARG_NAME_VAR_NAME, args);
         Integer sampleIndex = this.getArgValue(ARG_NAME_SAMPLE_INDEX, args);
 
         List<CSVRecord> csvRecords = CsvDataReader.getInstance().getCsvData(csvFileName);

@@ -182,7 +182,7 @@ public class SampleExpressionExecutor extends BaseSamplerComponent {
             return null;
         }
 
-        return (String) this.expExecutor.apply(parser.getExpNodeStack(), params);
+        return String.valueOf(this.expExecutor.apply(parser.getExpNodeStack(), params));
     }
 
     /**
