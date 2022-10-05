@@ -5,8 +5,10 @@ import cn.bossfriday.jmeter.common.PocException;
 import cn.bossfriday.jmeter.fuction.BaseFunction;
 import cn.bossfriday.jmeter.fuction.FunctionExecutor;
 
-import java.util.Collections;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import static cn.bossfriday.jmeter.common.Const.ARG_NAME_X;
 
 /**
  * GetTimestamp
@@ -22,11 +24,15 @@ public class GetTimestamp extends BaseFunction {
 
     @Override
     public Object apply(Object... args) throws PocException {
-        return System.currentTimeMillis();
+        Long x = Long.parseLong(this.getArgValue(ARG_NAME_X, args).toString());
+        return Math.addExact(System.currentTimeMillis(), x);
     }
 
     @Override
     public Map<String, Integer> getArgsMap() {
-        return Collections.emptyMap();
+        Map<String, Integer> argMap = new ConcurrentHashMap<>(16);
+        argMap.put(ARG_NAME_X, 0);
+
+        return argMap;
     }
 }
