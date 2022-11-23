@@ -45,7 +45,6 @@ public class CircleCsvData extends BaseFunction {
         Map<String, Integer> argMap = new ConcurrentHashMap<>(16);
         argMap.put(ARG_NAME_CSV_FILE_NAME, 0);
         argMap.put(ARG_NAME_VAR_NAME, 1);
-        argMap.put(ARG_NAME_SAMPLE_INDEX, 2);
 
         return argMap;
     }

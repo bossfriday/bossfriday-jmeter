@@ -6,6 +6,8 @@ import org.apache.commons.collections4.MapUtils;
 
 import java.util.Map;
 
+import static cn.bossfriday.jmeter.common.Const.ARG_NAME_SAMPLE_INDEX;
+
 /**
  * BaseFunction
  *
@@ -18,7 +20,9 @@ public abstract class BaseFunction {
 
     protected BaseFunction(String funName) {
         this.funName = funName;
+
         this.argsMap = this.getArgsMap();
+        this.argsMap.putIfAbsent(ARG_NAME_SAMPLE_INDEX, this.argsMap.size());
     }
 
     /**
@@ -51,12 +55,12 @@ public abstract class BaseFunction {
         }
 
         if (!this.argsMap.containsKey(argName)) {
-            throw new PocException(String.format("Function args not existed! argName:%s", argName));
+            throw new PocException(String.format("Function argKey not existed! argName:%s", argName));
         }
 
         int argIndex = this.argsMap.get(argName);
         if (args.length <= argIndex) {
-            throw new PocException(String.format("Function args not existed! argName:%s", argName));
+            throw new PocException(String.format("Function argValue not existed! argName:%s", argName));
         }
 
         return (T) args[argIndex];
@@ -68,7 +72,7 @@ public abstract class BaseFunction {
      * @return
      */
     public String getDocument() {
-        Map<String, Integer> sortedArgsMap = AppSamplerUtils.sortMapByValue(this.argsMap);
+        Map<String, Integer> sortedArgsMap = AppSamplerUtils.sortMapByValue(this.getArgsMap());
         StringBuilder sb = new StringBuilder();
         sb.append(this.funName);
         sb.append("(");
@@ -79,7 +83,7 @@ public abstract class BaseFunction {
             sb.append(entry.getKey());
             sb.append("}");
 
-            if (index != this.argsMap.size() - 1) {
+            if (index != sortedArgsMap.size() - 1) {
                 sb.append(", ");
             }
 

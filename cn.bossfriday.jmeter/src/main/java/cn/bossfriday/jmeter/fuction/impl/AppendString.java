@@ -6,8 +6,8 @@ import cn.bossfriday.jmeter.fuction.BaseFunction;
 import cn.bossfriday.jmeter.fuction.FunctionExecutor;
 import org.apache.commons.lang3.ArrayUtils;
 
-import java.util.Collections;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * AppendString
@@ -37,7 +37,7 @@ public class AppendString extends BaseFunction {
 
     @Override
     public Map<String, Integer> getArgsMap() {
-        return Collections.emptyMap();
+        return new ConcurrentHashMap<>(16);
     }
 
     @Override

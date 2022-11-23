@@ -35,8 +35,7 @@ public class GetMobile extends BaseFunction {
     public Map<String, Integer> getArgsMap() {
         Map<String, Integer> argMap = new ConcurrentHashMap<>(16);
         argMap.put(ARG_NAME_MOBILE_SEGMENT, 0);
-        argMap.put(ARG_NAME_SAMPLE_INDEX, 1);
-
+        
         return argMap;
     }
 }

@@ -8,8 +8,6 @@ import cn.bossfriday.jmeter.fuction.FunctionExecutor;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static cn.bossfriday.jmeter.common.Const.ARG_NAME_X;
-
 /**
  * GetTimestamp
  *
@@ -24,15 +22,11 @@ public class GetTimestamp extends BaseFunction {
 
     @Override
     public Object apply(Object... args) throws PocException {
-        Long x = Long.parseLong(this.getArgValue(ARG_NAME_X, args).toString());
-        return Math.addExact(System.currentTimeMillis(), x);
+        return System.currentTimeMillis();
     }
 
     @Override
     public Map<String, Integer> getArgsMap() {
-        Map<String, Integer> argMap = new ConcurrentHashMap<>(16);
-        argMap.put(ARG_NAME_X, 0);
-
-        return argMap;
+        return new ConcurrentHashMap<>(16);
     }
 }

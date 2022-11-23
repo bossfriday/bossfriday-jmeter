@@ -32,9 +32,6 @@ public class GetDepartmentName extends BaseFunction {
 
     @Override
     public Map<String, Integer> getArgsMap() {
-        Map<String, Integer> argMap = new ConcurrentHashMap<>(16);
-        argMap.put(ARG_NAME_SAMPLE_INDEX, 0);
-
-        return argMap;
+        return new ConcurrentHashMap<>(16);
     }
 }

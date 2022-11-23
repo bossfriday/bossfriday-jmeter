@@ -4,10 +4,9 @@ import cn.bossfriday.jmeter.common.PocException;
 import cn.bossfriday.jmeter.fuction.FunctionExecutor;
 import com.alibaba.fastjson.JSONPath;
 
-import java.util.Collection;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
+
+import static cn.bossfriday.jmeter.common.Const.ARG_NAME_SAMPLE_INDEX;
 
 /**
  * ExpressionExecutor
@@ -36,7 +35,14 @@ public class ExpressionCalculator {
                 Object value = this.getVariable(expNode, params);
                 expNode.setValue(value);
             } else if (ExpressionNodeType.FUNCTION.getType() == expNode.getNodeType()) {
-                Object value = FunctionExecutor.getInstance().apply(expNode.getExpression(), expNode.getArgumentValues().toArray());
+                List<Object> argValues = expNode.getArgumentValues();
+
+                // 目前只有一个不对外暴露的内置参数：sampleIndex，约定其位置为最后1个。
+                if (params.containsKey(ARG_NAME_SAMPLE_INDEX)) {
+                    argValues.add(params.get(ARG_NAME_SAMPLE_INDEX));
+                }
+
+                Object value = FunctionExecutor.getInstance().apply(expNode.getExpression(), argValues.toArray());
                 expNode.setValue(value);
             } else if (ExpressionNodeType.TEMPLATE.getType() == expNode.getNodeType()) {
                 String value = TemplateFormat.format(expNode.getExpression(), expNode.getArgumentValues());

@@ -71,6 +71,7 @@ public class Const {
     public static final String FUNCTION_GET_CSV_DATA = "getCsvData";
     public static final String FUNCTION_CIRCLE_CSV_DATA = "circleCsvData";
     public static final String FUNCTION_MOD_CSV_DATA = "modCsvData";
+    public static final String FUNCTION_OFFSET_LIMIT_CSV_DATA = "offsetLimitCsvData";
     public static final String FUNCTION_GET_GROUP_NAME = "getGroupName";
     public static final String FUNCTION_GET_DEPT_NAME = "getDeptName";
     public static final String FUNCTION_RANDOM_CHINESE_NAME = "randomChineseName";
@@ -93,6 +94,8 @@ public class Const {
     public static final String ARG_NAME_FIRST_NAME_LENGTH = "firstNameLength";
     public static final String ARG_NAME_X = "x";
     public static final String ARG_NAME_Y = "y";
+    public static final String ARG_NAME_OFFSET = "offset";
+    public static final String ARG_NAME_LIMIT = "limit";
 
     /**
      * Others
