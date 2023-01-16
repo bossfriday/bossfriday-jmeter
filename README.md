@@ -7,8 +7,6 @@
 * 采样变量申明无序处理带来的问题  
 由于对于采样变量的处理是用的无序Map处理（后续有空改为有序Map解决该问题），因此下面的用法不支持（会出错）：
 ```
-* 为了使用的更加直观，#{sampleIndex}参数不再对外暴露。例如：getCsvData(#{csvFileName}, #{varName}, #{sampleIndex}) -> getCsvData(#{csvFileName}, #{varName})
-
 --采样变量
 now: getTs()
 end: mathAdd(#{now}, 3700000)
@@ -16,6 +14,8 @@ end: mathAdd(#{now}, 3700000)
 --Header
 192.168.100.62:9030/calendar/v1/event/#{now}/#{end}
 ```
+
+* 为了使用的更加直观，#{sampleIndex}参数不再对外暴露。例如：getCsvData(#{csvFileName}, #{varName}, #{sampleIndex}) -> getCsvData(#{csvFileName}, #{varName})
 
 * 脚本处理极度简化带来的问题  
 由于工具开发时间较短（设计，开发时间一共不到10天），脚本处理部分极度简化（300行代码左右）。后续有时间再考虑替换为比较健壮的脚本引擎方式（考虑：分词，语法，四元组，执行器方式的脚本处理引擎），可以参考：遵循编译原理主要过程实现“打印1+1结果”：https://blog.csdn.net/camelials/article/details/123415475
