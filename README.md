@@ -7,6 +7,8 @@
 * 采样变量申明无序处理带来的问题  
 由于对于采样变量的处理是用的无序Map处理（后续有空改为有序Map解决该问题），因此下面的用法不支持（会出错）：
 ```
+* 为了使用的更加直观，#{sampleIndex}参数不再对外暴露。例如：getCsvData(#{csvFileName}, #{varName}, #{sampleIndex}) -> getCsvData(#{csvFileName}, #{varName})
+
 --采样变量
 now: getTs()
 end: mathAdd(#{now}, 3700000)
