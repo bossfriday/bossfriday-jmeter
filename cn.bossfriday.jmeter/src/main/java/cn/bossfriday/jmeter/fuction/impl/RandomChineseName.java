@@ -1,5 +1,6 @@
 package cn.bossfriday.jmeter.fuction.impl;
 
+import cn.bossfriday.jmeter.common.Combo2;
 import cn.bossfriday.jmeter.common.Const;
 import cn.bossfriday.jmeter.common.PocException;
 import cn.bossfriday.jmeter.fuction.BaseFunction;
@@ -27,7 +28,8 @@ public class RandomChineseName extends BaseFunction {
     public Object apply(Object... args) throws PocException {
         Integer firstNameLength = Integer.parseInt(this.getArgValue(ARG_NAME_FIRST_NAME_LENGTH, args).toString());
         try {
-            return ChineseUtils.getRandomChineseName(firstNameLength);
+            Combo2<String, String> result = ChineseUtils.getRandomChineseName(firstNameLength);
+            return result.getV1() + result.getV2();
         } catch (Exception ex) {
             throw new PocException(ex);
         }
