@@ -143,8 +143,8 @@ public abstract class BaseSampler extends BaseSamplerComponent {
      */
     protected String getVariable(String varName, int currentSampleIndex) throws PocException {
         // 常量无需计算直接返回
-        if (this.executor.getConstVarMap().containsKey(varName)) {
-            return (String) this.executor.getConstVarMap().get(varName);
+        if (this.executor.getStaticConstArgsMap().containsKey(varName)) {
+            return (String) this.executor.getStaticConstArgsMap().get(varName);
         }
 
         Map<String, Object> args = this.executor.getVariableMap(currentSampleIndex);

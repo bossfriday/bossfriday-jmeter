@@ -18,8 +18,8 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.StringEntity;
 
 import java.net.URI;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import static cn.bossfriday.jmeter.common.Const.ARG_NAME_SAMPLE_INDEX;
 import static cn.bossfriday.jmeter.common.Const.SAMPLE_VAR_MAP_DURATION;
@@ -32,7 +32,9 @@ import static cn.bossfriday.jmeter.common.Const.SAMPLE_VAR_MAP_DURATION;
 public class SampleExpressionExecutor extends BaseSamplerComponent {
 
     @Getter
-    private Map<String, Object> constVarMap;
+    private LinkedHashMap<String, Object> staticConstArgsMap;
+
+    private LinkedHashMap<String, ExpressionParser> dynamicVariableArgsMap;
 
     @Getter
     private ExpressionParser urlParser;
@@ -45,10 +47,10 @@ public class SampleExpressionExecutor extends BaseSamplerComponent {
 
     private ExpressionCalculator expExecutor;
 
-    private Map<String, ExpressionParser> nonConstVarParserMap;
-
-    // 这里没有必要使用LruHashMap，后续有时间实现一个环形Map做为采样变量缓存即可，不过从工具自身性能损耗测试结果来看（测试机器：DELL 灵越 17年老款笔记本；平均延时：<1ms，秒吞吐量：10W+），该优化意义不大；
-    private LruHashMap<Integer, ConcurrentHashMap<String, Object>> varMap;
+    /**
+     * 这里用一个环形的HashMap数据结构表达也可以，不过在数据量不大的情况下用环形HashMap性能收益并不大；
+     */
+    private LruHashMap<Integer, LinkedHashMap<String, Object>> varMap;
 
     public SampleExpressionExecutor(SamplerSetting setting) throws PocException {
         super(setting);
@@ -92,24 +94,21 @@ public class SampleExpressionExecutor extends BaseSamplerComponent {
             return this.varMap.get(currentSampleIndex);
         }
 
-        // 预置参数
-        ConcurrentHashMap<String, Object> params = new ConcurrentHashMap<>(16);
+        // 采样常量参数及内置sampleIndex参数填充
+        LinkedHashMap<String, Object> params = new LinkedHashMap<>(16);
         params.put(ARG_NAME_SAMPLE_INDEX, currentSampleIndex);
-        params.putAll(this.constVarMap);
+        params.putAll(this.staticConstArgsMap);
 
-        if (MapUtils.isEmpty(this.nonConstVarParserMap)) {
+        if (MapUtils.isEmpty(this.dynamicVariableArgsMap)) {
+            this.varMap.put(currentSampleIndex, params);
             return params;
         }
 
-        // 采样变量参数
-        for (Map.Entry<String, ExpressionParser> entry : this.nonConstVarParserMap.entrySet()) {
-            ConcurrentHashMap<String, Object> args = new ConcurrentHashMap<>(16);
-            args.put(ARG_NAME_SAMPLE_INDEX, currentSampleIndex);
-            args.putAll(this.constVarMap);
-
+        // 采样变量参数填充
+        for (Map.Entry<String, ExpressionParser> entry : this.dynamicVariableArgsMap.entrySet()) {
             String varName = entry.getKey();
             ExpressionParser varParser = entry.getValue();
-            String varValue = this.applyExpression(varParser, args);
+            String varValue = this.applyExpression(varParser, params);
 
             if (params.putIfAbsent(varName, varValue) != null) {
                 throw new PocException(String.format("duplicated variable: %s", varName));
@@ -117,7 +116,6 @@ public class SampleExpressionExecutor extends BaseSamplerComponent {
         }
 
         this.varMap.put(currentSampleIndex, params);
-
         return this.varMap.get(currentSampleIndex);
     }
 
@@ -186,20 +184,20 @@ public class SampleExpressionExecutor extends BaseSamplerComponent {
     }
 
     /**
-     * initSampleVariables
+     * initVariables
      */
     private void initVariables() throws PocException {
         this.resetVariables();
-        Map<String, String> varSettingMap = AppSamplerUtils.getKvMap(this.setting.getSampleVar());
+        LinkedHashMap<String, String> varSettingMap = AppSamplerUtils.getKvMap(this.setting.getSampleVar());
         for (Map.Entry<String, String> entry : varSettingMap.entrySet()) {
             ExpressionParser expParser = new ExpressionParser(entry.getValue());
             expParser.parse();
 
+            // 为了减少表达计算次数后续只对动态变量做表达计算，因此这里将他们分类暂存
             if (expParser.isConstant()) {
-                this.constVarMap.put(entry.getKey(), entry.getValue());
+                this.staticConstArgsMap.put(entry.getKey(), entry.getValue());
             } else {
-                // 为了减少表达计算次数后续只对非常量变量做计算
-                this.nonConstVarParserMap.put(entry.getKey(), expParser);
+                this.dynamicVariableArgsMap.put(entry.getKey(), expParser);
             }
         }
     }
@@ -210,12 +208,12 @@ public class SampleExpressionExecutor extends BaseSamplerComponent {
     private void resetVariables() {
         // just help GC
         this.varMap = null;
-        this.constVarMap = null;
-        this.nonConstVarParserMap = null;
+        this.staticConstArgsMap = null;
+        this.dynamicVariableArgsMap = null;
 
         // 缓存最近2W条采样变量计算结果已经足够（几乎不可能需要用到1W+以上的线程去打压）
         this.varMap = new LruHashMap<>(20000, null, SAMPLE_VAR_MAP_DURATION);
-        this.constVarMap = new ConcurrentHashMap<>(16);
-        this.nonConstVarParserMap = new ConcurrentHashMap<>(16);
+        this.staticConstArgsMap = new LinkedHashMap<>(16);
+        this.dynamicVariableArgsMap = new LinkedHashMap<>(16);
     }
 }

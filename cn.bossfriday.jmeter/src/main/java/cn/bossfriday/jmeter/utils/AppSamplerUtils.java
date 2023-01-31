@@ -8,7 +8,6 @@ import org.apache.http.client.methods.*;
 import org.apache.jmeter.samplers.SampleResult;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -127,9 +126,10 @@ public class AppSamplerUtils {
      * @param data
      * @return
      */
-    public static Map<String, String> getKvMap(String data) throws PocException {
+    public static LinkedHashMap<String, String> getKvMap(String data) throws PocException {
+        LinkedHashMap<String, String> resultMap = new LinkedHashMap<>(16);
         if (StringUtils.isEmpty(data)) {
-            return Collections.emptyMap();
+            return resultMap;
         }
 
         if (!data.endsWith(CONST_LF)) {
@@ -137,7 +137,6 @@ public class AppSamplerUtils {
         }
 
         Matcher matcher = keyValuePattern.matcher(data);
-        Map<String, String> resultMap = new ConcurrentHashMap<>(16);
         while (matcher.find()) {
             String key = matcher.group(REG_GROUP_NAME_KEY).trim();
             String value = matcher.group(REG_GROUP_NAME_VALUE).trim();
