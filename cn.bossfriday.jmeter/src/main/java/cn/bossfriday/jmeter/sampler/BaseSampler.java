@@ -115,7 +115,7 @@ public abstract class BaseSampler extends BaseSamplerComponent {
                 if (extractorEntry.getExpressionNode().getNodeType() == ExpressionNodeType.VARIABLE.getType()) {
                     value = this.getVariable(extractorEntry.getExpressionNode().getExpression(), currentSampleIndex);
                 } else if (extractorEntry.getExpressionNode().getNodeType() == ExpressionNodeType.CONSTANT.getType()) {
-                    value = JsonPath.read(apiResponseBody, extractorEntry.getJsonPath());
+                    value = JsonPath.read(apiResponseBody, extractorEntry.getJsonPath()).toString();
                 } else {
                     throw new PocException("JSON Path setting only support : constant or variable!");
                 }
