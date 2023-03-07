@@ -75,11 +75,14 @@ public class Const {
     public static final String FUNCTION_GET_GROUP_NAME = "getGroupName";
     public static final String FUNCTION_GET_DEPT_NAME = "getDeptName";
     public static final String FUNCTION_RANDOM_CHINESE_NAME = "randomChineseName";
-    public static final String FUNCTION_GET_TIMESTAMP = "getTs";
+    public static final String FUNCTION_GET_TIME = "getTime";
+    public static final String FUNCTION_GET_DATE = "getDate";
     public static final String FUNCTION_MATH_ADD = "mathAdd";
     public static final String FUNCTION_MATH_SUBTRACT = "mathSubtract";
     public static final String FUNCTION_MATH_MULTIPLY = "mathMultiply";
     public static final String FUNCTION_MATH_DIVIDE = "mathDivide";
+    public static final String FUNCTION_LEFT_STRING = "leftString";
+    public static final String FUNCTION_RIGHT_STRING = "rightString";
 
     /**
      * ArgName
@@ -96,6 +99,12 @@ public class Const {
     public static final String ARG_NAME_Y = "y";
     public static final String ARG_NAME_OFFSET = "offset";
     public static final String ARG_NAME_LIMIT = "limit";
+    public static final String ARG_NAME_CONTENT = "content";
+    public static final String ARG_NAME_LENGTH = "length";
+    public static final String ARG_NAME_DATE = "date";
+    public static final String ARG_NAME_PATTERN = "pattern";
+    public static final String ARG_NAME_FIELD = "field";
+    public static final String ARG_NAME_AMOUNT = "amount";
 
     /**
      * Others
